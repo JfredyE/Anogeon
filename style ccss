@@ -1,0 +1,435 @@
+/* ==========================================================================
+   1. VARIABLES Y CONFIGURACIÓN GENERAL
+   ========================================================================== */
+:root {
+  --font-spiritual: 'Cinzel', serif;
+  --font-nature: 'Playfair Display', serif;
+  --font-study: 'Montserrat', sans-serif;
+  --font-sports: 'Teko', sans-serif;
+  --text-light: #ffffff;
+  --text-muted: #e2e8f0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #030712;
+  color: var(--text-light);
+  overflow-x: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* Ocultar los radio inputs de navegación */
+.slide-controller {
+  display: none;
+}
+
+/* ==========================================================================
+   2. FLECHAS Y BOTONES DE NAVEGACIÓN
+   ========================================================================== */
+.nav-arrow {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
+}
+
+.nav-left { left: 25px; }
+.nav-right { right: 25px; }
+
+.arrow-btn {
+  display: none;
+  width: 65px;
+  height: 65px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(12px);
+  border-radius: 50%;
+  color: #ffffff;
+  font-size: 2.5rem;
+  line-height: 56px;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+}
+
+.arrow-btn:hover {
+  background: rgba(255, 255, 255, 0.35);
+  transform: scale(1.18);
+  border-color: #ffffff;
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.6);
+}
+
+/* Botones de navegación inferior */
+.dots-container {
+  position: fixed;
+  bottom: 85px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.8rem;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 0.5rem 1.2rem;
+  border-radius: 30px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.dot {
+  cursor: pointer;
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  transition: all 0.3s ease;
+}
+
+/* ==========================================================================
+   3. LÓGICA DE INTERACCIÓN DE PÁGINAS (CSS PURO)
+   ========================================================================== */
+#slide1:checked ~ .nav-left .target-slide1,
+#slide1:checked ~ .nav-right .target-slide1,
+#slide2:checked ~ .nav-left .target-slide2,
+#slide2:checked ~ .nav-right .target-slide2,
+#slide3:checked ~ .nav-left .target-slide3,
+#slide3:checked ~ .nav-right .target-slide3,
+#slide4:checked ~ .nav-left .target-slide4,
+#slide4:checked ~ .nav-right .target-slide4 {
+  display: block;
+}
+
+#slide1:checked ~ .main-slider { transform: translateX(0%); }
+#slide2:checked ~ .main-slider { transform: translateX(-100vw); }
+#slide3:checked ~ .main-slider { transform: translateX(-200vw); }
+#slide4:checked ~ .main-slider { transform: translateX(-300vw); }
+
+#slide1:checked ~ .dots-container .dot1 { background: #f59e0b; color: #000; }
+#slide2:checked ~ .dots-container .dot2 { background: #06b6d4; color: #000; }
+#slide3:checked ~ .dots-container .dot3 { background: #f97316; color: #000; }
+#slide4:checked ~ .dots-container .dot4 { background: #10b981; color: #000; }
+
+/* ==========================================================================
+   4. ESTRUCTURA Y FONDOS REALISTAS CON ANIMACIÓN
+   ========================================================================== */
+.main-slider {
+  display: flex;
+  width: 400vw;
+  height: 100vh;
+  transition: transform 0.9s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.slide {
+  width: 100vw;
+  height: 100vh;
+  padding: 3rem 2rem 7rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.bg-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+  animation: slowZoom 20s infinite alternate ease-in-out;
+}
+
+@keyframes slowZoom {
+  from { transform: scale(1); }
+  to { transform: scale(1.1); }
+}
+
+/* Imágenes de fondo realistas de alta definición */
+.bg-spiritual {
+  background-image: url('https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=1920&q=80');
+}
+
+.bg-study {
+  background-image: url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1920&q=80');
+}
+
+.bg-sports {
+  background-image: url('https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&w=1920&q=80');
+}
+
+.bg-nature {
+  background-image: url('https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1920&q=80');
+}
+
+.overlay-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, rgba(3, 7, 18, 0.3) 0%, rgba(3, 7, 18, 0.85) 100%);
+  z-index: 1;
+}
+
+.slide-content {
+  max-width: 900px;
+  text-align: center;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+/* ==========================================================================
+   5. TEMAS Y TIPOGRAFÍAS
+   ========================================================================== */
+
+/* ESPIRITUAL */
+.title-spiritual {
+  font-family: var(--font-spiritual);
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  color: #fef08a;
+  text-shadow: 0 0 20px rgba(245, 158, 11, 0.6);
+}
+.badge-gold { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.5); }
+.card-gold { border-left: 4px solid #f59e0b; }
+
+.divine-rays {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(from 0deg, transparent 0deg, rgba(254, 240, 138, 0.08) 20deg, transparent 40deg);
+  animation: rotateRays 80s linear infinite;
+  z-index: 1;
+  pointer-events: none;
+}
+@keyframes rotateRays { to { transform: rotate(360deg); } }
+
+/* NATURALEZA */
+.title-nature {
+  font-family: var(--font-nature);
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  color: #6ee7b7;
+  text-shadow: 0 0 20px rgba(16, 185, 129, 0.6);
+  font-style: italic;
+}
+.badge-green { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.5); }
+.card-green { border-left: 4px solid #10b981; }
+
+/* UNIVERSITARIO */
+.title-study {
+  font-family: var(--font-study);
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-weight: 800;
+  color: #67e8f9;
+  text-shadow: 0 0 20px rgba(6, 182, 212, 0.6);
+}
+.badge-cyan { background: rgba(6, 182, 212, 0.2); color: #38bdf8; border: 1px solid rgba(6, 182, 212, 0.5); }
+.card-cyan { border-left: 4px solid #06b6d4; }
+
+/* DEPORTIVO */
+.title-sports {
+  font-family: var(--font-sports);
+  font-size: clamp(3rem, 7vw, 4.8rem);
+  letter-spacing: 2px;
+  color: #ffedd5;
+  text-shadow: 0 0 20px rgba(249, 115, 22, 0.7);
+  text-transform: uppercase;
+}
+.badge-orange { background: rgba(249, 115, 22, 0.2); color: #fb923c; border: 1px solid rgba(249, 115, 22, 0.5); }
+.card-orange { border-left: 4px solid #f97316; }
+
+/* ==========================================================================
+   6. TARJETAS DE GLASSMORPHISM Y VERSÍCULOS
+   ========================================================================== */
+.badge {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 0.4rem 1.2rem;
+  border-radius: 50px;
+  font-weight: 600;
+  backdrop-filter: blur(8px);
+}
+
+.subtitle {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  max-width: 700px;
+  line-height: 1.6;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+}
+
+.glass-card {
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(16px);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+  max-width: 800px;
+}
+
+.bible-verse {
+  font-size: 1.15rem;
+  line-height: 1.8;
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+.verse-reference {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  opacity: 0.9;
+}
+
+.pillars-row {
+  display: flex;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 800px;
+  justify-content: center;
+}
+
+.mini-card {
+  flex: 1;
+  background: rgba(15, 23, 42, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  padding: 1.2rem;
+  border-radius: 12px;
+  text-align: left;
+  transition: transform 0.3s ease;
+}
+
+.mini-card:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.mini-card .icon {
+  font-size: 1.5rem;
+  margin-bottom: 0.4rem;
+  display: block;
+}
+
+.mini-card h4 {
+  font-size: 0.95rem;
+  margin-bottom: 0.2rem;
+}
+
+.mini-card p {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   7. PIE DE PÁGINA FIJO (CONTACTO DE WHATSAPP Y FACEBOOK)
+   ========================================================================== */
+.contact-fixed {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  padding: 0.8rem 2rem;
+  background: rgba(3, 7, 18, 0.9);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 90;
+}
+
+.contact-label {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.contact-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 1.4rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+.btn-whatsapp {
+  background: rgba(37, 211, 102, 0.2);
+  color: #25d366;
+  border: 1px solid rgba(37, 211, 102, 0.5);
+}
+
+.btn-whatsapp:hover {
+  background: #25d366;
+  color: #000;
+  box-shadow: 0 0 20px rgba(37, 211, 102, 0.6);
+  transform: translateY(-2px);
+}
+
+.btn-facebook {
+  background: rgba(24, 119, 242, 0.2);
+  color: #1877f2;
+  border: 1px solid rgba(24, 119, 242, 0.5);
+}
+
+.btn-facebook:hover {
+  background: #1877f2;
+  color: #fff;
+  box-shadow: 0 0 20px rgba(24, 119, 242, 0.6);
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   8. RESPONSIVO
+   ========================================================================== */
+@media (max-width: 768px) {
+  .dots-container { display: none; }
+  .pillars-row { flex-direction: column; }
+  .contact-fixed {
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 0.6rem 1rem;
+  }
+  .arrow-btn {
+    width: 50px;
+    height: 50px;
+    font-size: 2rem;
+    line-height: 44px;
+  }
+  .nav-left { left: 10px; }
+  .nav-right { right: 10px; }
+}
